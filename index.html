@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Interactive Quiz & Weather Dashboard</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <h1>Interactive Quiz & Weather Dashboard</h1>
+            <p>Timed Quiz • Local Storage Leaderboard • REST API Weather</p>
+        </div>
+    </header>
+
+
+    <main class="container">
+
+        <!-- ================= QUIZ ================= -->
+
+        <section class="card">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>⏱️ Timed Quiz</h2>
+                    <p>Answer all questions within the time limit.</p>
+                </div>
+
+                <div id="timer" class="timer">
+                    30s
+                </div>
+
+            </div>
+
+
+            <!-- QUIZ START -->
+
+            <div id="quizStart">
+
+                <div class="quiz-info">
+
+                    <div>
+                        <strong>5</strong>
+                        <span>Questions</span>
+                    </div>
+
+                    <div>
+                        <strong>30s</strong>
+                        <span>Time</span>
+                    </div>
+
+                    <div>
+                        <strong>1</strong>
+                        <span>Point Each</span>
+                    </div>
+
+                </div>
+
+                <button id="startBtn" class="primary-btn">
+                    Start Quiz
+                </button>
+
+            </div>
+
+
+            <!-- QUIZ BOX -->
+
+            <div id="quizBox" class="hidden">
+
+                <div class="quiz-top">
+
+                    <span id="questionNumber">
+                        Question 1 of 5
+                    </span>
+
+                    <span id="score">
+                        Score: 0
+                    </span>
+
+                </div>
+
+
+                <div class="progress">
+                    <div id="progressBar"></div>
+                </div>
+
+
+                <h3 id="question"></h3>
+
+
+                <div id="options"></div>
+
+
+                <button
+                    id="nextBtn"
+                    class="primary-btn"
+                    disabled
+                >
+                    Next Question
+                </button>
+
+            </div>
+
+
+            <!-- RESULT -->
+
+            <div id="resultBox" class="hidden result-box">
+
+                <h2>🎉 Quiz Completed!</h2>
+
+                <p id="finalScore"></p>
+
+                <p id="resultMessage"></p>
+
+
+                <label for="playerName">
+                    Enter your name
+                </label>
+
+                <input
+                    type="text"
+                    id="playerName"
+                    placeholder="Your Name"
+                    maxlength="30"
+                >
+
+
+                <button
+                    id="saveScoreBtn"
+                    class="primary-btn"
+                >
+                    Save Score
+                </button>
+
+
+                <button
+                    id="restartBtn"
+                    class="secondary-btn"
+                >
+                    Restart Quiz
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= LEADERBOARD ================= -->
+
+        <section class="card">
+
+            <div class="section-title">
+
+                <div>
+                    <h2>🏆 Leaderboard</h2>
+
+                    <p>
+                        Scores are stored in browser localStorage.
+                    </p>
+                </div>
+
+                <button
+                    id="clearBtn"
+                    class="danger-btn"
+                >
+                    Clear
+                </button>
+
+            </div>
+
+
+            <div id="leaderboard">
+
+                <p class="empty">
+                    No scores available yet.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= WEATHER ================= -->
+
+        <section class="card">
+
+            <div class="section-title">
+
+                <div>
+
+                    <h2>🌦️ Weather Dashboard</h2>
+
+                    <p>
+                        Live weather data using OpenWeatherMap REST API
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <form id="weatherForm">
+
+                <input
+                    type="text"
+                    id="cityInput"
+                    placeholder="Enter city name e.g. Delhi"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                >
+                    Get Weather
+                </button>
+
+            </form>
+
+
+            <!-- LOADING -->
+
+            <div
+                id="loading"
+                class="loading hidden"
+            >
+                Loading weather data...
+            </div>
+
+
+            <!-- ERROR -->
+
+            <div
+                id="weatherError"
+                class="error hidden"
+            ></div>
+
+
+            <!-- WEATHER RESULT -->
+
+            <div
+                id="weatherBox"
+                class="hidden"
+            >
+
+                <div class="weather-main">
+
+                    <div>
+
+                        <h2 id="cityName">
+                            Delhi
+                        </h2>
+
+                        <p id="weatherDescription">
+                            Clear Sky
+                        </p>
+
+                    </div>
+
+
+                    <div
+                        id="weatherIcon"
+                        class="weather-icon"
+                    >
+                        ☀️
+                    </div>
+
+
+                    <div
+                        id="temperature"
+                        class="temperature"
+                    >
+                        25°C
+                    </div>
+
+                </div>
+
+
+                <div class="weather-grid">
+
+                    <div class="weather-item">
+
+                        <span>💧</span>
+
+                        <p>Humidity</p>
+
+                        <strong id="humidity">
+                            --%
+                        </strong>
+
+                    </div>
+
+
+                    <div class="weather-item">
+
+                        <span>💨</span>
+
+                        <p>Wind Speed</p>
+
+                        <strong id="wind">
+                            -- m/s
+                        </strong>
+
+                    </div>
+
+
+                    <div class="weather-item">
+
+                        <span>🌡️</span>
+
+                        <p>Feels Like</p>
+
+                        <strong id="feelsLike">
+                            --°C
+                        </strong>
+
+                    </div>
+
+
+                    <div class="weather-item">
+
+                        <span>🔽</span>
+
+                        <p>Pressure</p>
+
+                        <strong id="pressure">
+                            -- hPa
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <p>
+            Interactive Quiz & Weather Dashboard © 2026
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
